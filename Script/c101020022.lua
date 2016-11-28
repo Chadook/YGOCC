@@ -1,3 +1,5 @@
+--created by LionHeartKIng
+--coded by Lyris
 --Coast Monk of Stellar Vine
 function c101020022.initial_effect(c)
 	--Once per turn, if you control no other monsters: You can Special Summon 1 "Stellar Vine" monster from your Deck or 1 that is banished, except "Coast Monk of Stellar Vine".
