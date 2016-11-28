@@ -12,7 +12,7 @@ function c19454009.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c19454009.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_BATTLE and not Duel.CheckPhaseActivity()
+	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and not Duel.CheckPhaseActivity()
 end
 function c19454009.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ag=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

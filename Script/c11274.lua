@@ -32,7 +32,7 @@ function c11274.limfilter(c)
 end
 function c11274.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_BATTLE) and Duel.IsExistingMatchingCard(c11274.limfilter,tp,LOCATION_MZONE,0,1,nil)
+    return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) and Duel.IsExistingMatchingCard(c11274.limfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c11274.limop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
