@@ -259,7 +259,7 @@ function c11110105.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(11110105,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 end
 function c11110105.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil and e:GetHandler():GetBattleTarget():IsDefencePos()
+	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil and e:GetHandler():GetBattleTarget():IsDefensePos()
 		and c:GetFlagEffect(11110105)>0
 end
 function c11110105.damop(e,tp,eg,ep,ev,re,r,rp)
