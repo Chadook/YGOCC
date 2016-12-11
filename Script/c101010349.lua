@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Bladewing Tara
 function c101010349.initial_effect(c)
 --pierce

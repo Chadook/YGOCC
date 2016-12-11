@@ -1,3 +1,5 @@
+--created by LionHeartKIng
+--coded by Lyris
 --Tide Witch of Stellar Vine
 function c101020024.initial_effect(c)
 	--search1
@@ -20,7 +22,7 @@ function c101020024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101020024.rfilter(c)
-	return c:IsType(TYPE_MONSTER) c:IsSetCard(0x785e) and c:IsAbleToRemove() and c:GetCode()~=101020024
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e) and c:IsAbleToRemove() and c:GetCode()~=101020024
 end
 function c101020024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101020024.rfilter,tp,LOCATION_DECK,0,1,nil) end

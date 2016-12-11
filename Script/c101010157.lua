@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Ｓ・Ｖｉｎｅの女王－クラリサ
 function c101010157.initial_effect(c)
 --special summon

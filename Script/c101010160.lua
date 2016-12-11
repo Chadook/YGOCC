@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --
 function c101010160.initial_effect(c)
 local ss=Effect.CreateEffect(c)

@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Blademaster Training
 function c101010230.initial_effect(c)
 --activate

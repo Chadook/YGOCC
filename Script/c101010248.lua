@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Jeweled Skydancer of Stellar Vine
 function c101010248.initial_effect(c)
 aux.EnableDualAttribute(c)

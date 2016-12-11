@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Dimension Birth
 function c101010173.initial_effect(c)
 	--Activate

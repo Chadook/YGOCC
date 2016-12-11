@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Bladewing Dawning
 function c101010350.initial_effect(c)
 --pierce

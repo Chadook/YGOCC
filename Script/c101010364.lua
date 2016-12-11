@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Bladewing Brynhildr
 function c101010364.initial_effect(c)
 c:EnableReviveLimit()
