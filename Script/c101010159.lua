@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Girl of Stellar Vine
 function c101010159.initial_effect(c)
 --draw

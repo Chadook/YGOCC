@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Blade Flight
 function c101010383.initial_effect(c)
 --"Blademaster" and "Bladewing" monsters you control cannot be targeted by your opponent's card effects. Once per turn, when a Spell, Trap, or Spell/Trap effect targets a "Blademaster" or "Bladewing" monster you control: You can return 1 of those targets to your hand, then you can Special Summon 1 monster from your hand with a different name than the returned monster.

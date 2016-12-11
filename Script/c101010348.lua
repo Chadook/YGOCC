@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Bladewing Shinob
 function c101010348.initial_effect(c)
 --pierce

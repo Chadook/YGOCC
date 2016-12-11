@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Bladewing's Aerial Advantage
 function c101010371.initial_effect(c)
 --Discard 1 "Blademaster" or "Bladewing" monster; Draw 2 cards, then if your opponent controls more monsters than you do, change 1 monster your opponent controls to face-down Defense Position, also, if you control no monsters, Draw 1 card. You can only activate 1 "Bladewing's Aerial Advantage" per turn.

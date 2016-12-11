@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Ｓ・Ｖｉｎｅの少女－ジャッキー
 function c101010158.initial_effect(c)
 local e1=Effect.CreateEffect(c)

@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Ragna Clarissa of Stellar Vine
 function c101010217.initial_effect(c)
 	--refill Once per turn, during either player's turn, when a banished "Stellar Vine" monster is returned to the Graveyard: you can banish 1 "Stellar Vine" monster from your Deck. If this card would be sent to the Graveyard from the field or as an Xyz Material, banish it instead.
@@ -11,8 +12,8 @@ function c101010217.initial_effect(c)
 	ae3:SetTarget(c101010217.target)
 	ae3:SetOperation(c101010217.operation)
 	c:RegisterEffect(ae3)
-	if not spatial_check then
-		spatial_check=true
+	if not c101010217.global_check then
+		c101010217.global_check=true
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)

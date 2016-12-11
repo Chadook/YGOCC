@@ -1,12 +1,13 @@
+--created & coded by Lyris
 --Wyvern of Stellar Vine
 function c101010184.initial_effect(c)
-	c:EnableUnsummonable()
+	c:EnableReviveLimit()
 	--special summon condition
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e3:SetValue(c101010184.splimit)
+	e3:SetValue(aux.FALSE)
 	c:RegisterEffect(e3)
 	--special summon
 	local e2=Effect.CreateEffect(c)

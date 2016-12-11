@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Blademaster's Call
 function c101010222.initial_effect(c)
 --Activate this card if you control no monsters: Special Summon 1 "Blademaster" or "Bladewing" monster from your Deck, then target that monster with this card, negate it's effects.

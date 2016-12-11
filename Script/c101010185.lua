@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Pegasus of Stellar Vine
 function c101010185.initial_effect(c)
 --summon with no tribute

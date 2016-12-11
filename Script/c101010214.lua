@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --剣主 四
 function c101010214.initial_effect(c)
 c:EnableReviveLimit()

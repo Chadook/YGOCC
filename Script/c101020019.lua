@@ -1,3 +1,5 @@
+--created by LionHeartKIng
+--coded by Lyris
 --Necromaster of Stellar Vine
 function c101020019.initial_effect(c)
 	--special summon

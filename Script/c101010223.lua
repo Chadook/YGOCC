@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Blademaster's Guidance
 function c101010223.initial_effect(c)
 --Activate When an attack is declared involving a "Blademaster" monster you control: That monster gains ATK equal to the DEF of the opponent's monster, but during your turn, its original ATK is halved until the end of this turn. You can only activate 1 "Blademaster's Guidance" per turn.

@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Ｓ・Ｖｉｎｅの公爵－ザフィル
 function c101010247.initial_effect(c)
 --on-banish

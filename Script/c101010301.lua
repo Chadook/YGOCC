@@ -1,3 +1,4 @@
+--created & coded by Lyris
 --Blade's Oath
 function c101010301.initial_effect(c)
 --Special Summon 1 "Blademaster" monster attached to an Xyz Monster you control. You can only activate 1 "Blade's Oath" per turn.
