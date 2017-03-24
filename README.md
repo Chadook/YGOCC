@@ -1,2 +1,2 @@
 # YGOCC
-This repository is ONLY For accepted cards into the database, other than that, it will be deleted without Pirior Notice.
+Download This repo this your YGOPRO's Main directory, The files will automatically be installed into your Game.
