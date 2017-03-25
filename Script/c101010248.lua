@@ -1,8 +1,7 @@
 --created & coded by Lyris
---Jeweled Skydancer of Stellar Vine
+--S・VINE曲芸師ズンバ
 function c101010248.initial_effect(c)
 aux.EnableDualAttribute(c)
-	--recruit
 	local e0=Effect.CreateEffect(c)
 	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e0:SetType(EFFECT_TYPE_IGNITION)
@@ -15,8 +14,8 @@ aux.EnableDualAttribute(c)
 	c:RegisterEffect(e0)
 end
 function c101010248.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Remove(Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil),POS_FACEUP,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	Duel.Remove(Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil),POS_FACEUP,REASON_COST)
 end
 function c101010248.filter(c,e,tp)
 	return c:IsSetCard(0x785e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -34,16 +33,11 @@ function c101010248.op(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetCode(EFFECT_CHANGE_RACE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue((tc:GetLevel()*800))
+		e1:SetValue(RACE_FAIRY)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CANNOT_ATTACK)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 	end
 end

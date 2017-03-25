@@ -1,12 +1,12 @@
 --created & coded by Lyris
---Ｓ・Ｖｉｎｅの女王－クラリサ
+--S・VINEの女王クライッシャ
 function c101010157.initial_effect(c)
---special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,101010157)
 	e1:SetCondition(c101010157.spcon)
 	e1:SetOperation(c101010157.spop)
 	c:RegisterEffect(e1)
@@ -19,24 +19,35 @@ function c101010157.initial_effect(c)
 	e2:SetOperation(c101010157.rmop)
 	c:RegisterEffect(e2)
 end
-function c101010157.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x785e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+function c101010157.cfilter(c,e)
+	return c:IsFaceup() and c:GetLevel()>0 and c:GetLevel()~=8 and not c:IsImmuneToEffect(e)
 end
 function c101010157.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return  Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-	and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonCount(tp,2)
-		and Duel.IsExistingMatchingCard(c101010157.cfilter,tp,LOCATION_REMOVED,0,2,nil,e,tp)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+		and Duel.IsExistingMatchingCard(c101010157.cfilter,tp,0,LOCATION_MZONE,2,nil,e)
 end
 function c101010157.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectMatchingCard(tp,c101010157.cfilter,tp,LOCATION_REMOVED,0,2,2,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,c101010157.cfilter,tp,0,LOCATION_MZONE,2,2,nil,e)
+	Duel.Hint(HINT_CARD,0,101010157)
+	local tc=g:GetFirst()
+	while tc do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(8)
+		tc:RegisterEffect(e1)
+		tc=g:GetNext()
+	end
 end
 function c101010157.filter(c)
 	local code=c:GetCode()
-	return c:IsSetCard(0x785e) and code~=101010157 and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e) and code~=101010157 and c:IsAbleToHand()
 end
 function c101010157.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

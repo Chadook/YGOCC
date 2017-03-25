@@ -1,4 +1,4 @@
---created by Chadook, coded by Michael Lawrence Dee
+--created by Chadook, coded by Michael Lawrence Dee & Lyris
 --エーボルート召喚
 function c388.initial_effect(c)
 	if not c388.global_check then
@@ -21,7 +21,6 @@ function c388.op(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		if tc:GetFlagEffect(388)==0 then
 			if not tc.relay then tc:SetStatus(STATUS_NO_LEVEL,true) end
-			--c:EnableCounterPermit(0x88)
 			local e0=Effect.CreateEffect(tc)
 			e0:SetType(EFFECT_TYPE_SINGLE)
 			e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

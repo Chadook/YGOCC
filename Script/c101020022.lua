@@ -1,8 +1,6 @@
---created by LionHeartKIng
---coded by Lyris
---Coast Monk of Stellar Vine
+--created by LionHeartKIng, coded by Lyris
+--S・VINEのコースト・プリースト
 function c101020022.initial_effect(c)
-	--Once per turn, if you control no other monsters: You can Special Summon 1 "Stellar Vine" monster from your Deck or 1 that is banished, except "Coast Monk of Stellar Vine".
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -12,12 +10,11 @@ function c101020022.initial_effect(c)
 	e4:SetTarget(c101020022.sptg)
 	e4:SetOperation(c101020022.spop)
 	c:RegisterEffect(e4)
-	--If your opponent declares a direct attack, while this card is banished: You can Special Summon this card, and if you do, negate the attack and end the Battle Phase. You can only use this effect of "Coast Monk of Stellar Vine" once per Duel.
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetRange(LOCATION_HAND)
+	e1:SetRange(LOCATION_REMOVED)
 	e1:SetCountLimit(1,101020022+EFFECT_COUNT_CODE_DUEL)
 	e1:SetCondition(c101020022.condition)
 	e1:SetTarget(c101020022.target)
@@ -27,7 +24,7 @@ end
 function c101020022.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1
 end
-function c101020022.filter(c,e,tp)
+function c101020022.spfilter(c,e,tp)
 	return c:IsSetCard(0x785e) and not c:IsCode(101020022) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101020022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

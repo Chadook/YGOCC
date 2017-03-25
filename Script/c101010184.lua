@@ -1,15 +1,13 @@
 --created & coded by Lyris
---Wyvern of Stellar Vine
+--「S・VINE」ワイヴァーン
 function c101010184.initial_effect(c)
-	c:EnableReviveLimit()
-	--special summon condition
+	c:EnableUnsummonable()
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e3:SetValue(aux.FALSE)
+	e3:SetValue(function(e,se,sp,st) return se:IsHasType(EFFECT_TYPE_ACTIONS) end)
 	c:RegisterEffect(e3)
-	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -18,7 +16,6 @@ function c101010184.initial_effect(c)
 	e2:SetTarget(c101010184.sptg)
 	e2:SetOperation(c101010184.spop)
 	c:RegisterEffect(e2)
-	--
 	local e0=Effect.CreateEffect(c)
 	e0:SetCategory(CATEGORY_REMOVE+CATEGORY_TOGRAVE)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -33,7 +30,8 @@ function c101010184.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
 function c101010184.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND) and c:IsFaceup()
 end
 function c101010184.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -42,15 +40,15 @@ function c101010184.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101010184.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,1,tp,tp,true,true,POS_FACEUP_ATTACK)>0 then
-		c:CompleteProcedure()
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 end
 function c101010184.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function c101010184.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x785e)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e)
 end
 function c101010184.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101010184.filter(chkc) end

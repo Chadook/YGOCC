@@ -1,13 +1,13 @@
 --created & coded by Lyris
---Ragna Clarissa of Stellar Vine
+--S・VINEの零嬢天使ラグナクライッシャ
 function c101010217.initial_effect(c)
-	--refill Once per turn, during either player's turn, when a banished "Stellar Vine" monster is returned to the Graveyard: you can banish 1 "Stellar Vine" monster from your Deck. If this card would be sent to the Graveyard from the field or as an Xyz Material, banish it instead.
+	c:EnableReviveLimit()
 	local ae3=Effect.CreateEffect(c)
 	ae3:SetCategory(CATEGORY_REMOVE)
 	ae3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	ae3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	ae3:SetCode(EVENT_TO_GRAVE)
 	ae3:SetRange(LOCATION_MZONE)
-	ae3:SetCountLimit(1)
 	ae3:SetCondition(c101010217.condition)
 	ae3:SetTarget(c101010217.target)
 	ae3:SetOperation(c101010217.operation)
@@ -24,19 +24,24 @@ function c101010217.initial_effect(c)
 	end
 end
 c101010217.spatial=true
---Spatial Formula filter(s)
-c101010217.material=function(mc) return mc:IsAttribute(ATTRIBUTE_WATER) and mc:IsSetCard(0x785e) end
+c101010217.dimensional_number_o=4
+c101010217.dimensional_number=c101010217.dimensional_number_o
+function c101010217.material(mc)
+	return mc:IsAttribute(ATTRIBUTE_WATER) and mc:IsSetCard(0x785e)
+end
 function c101010217.chk(e,tp,eg,ep,ev,re,r,rp)
 	Duel.CreateToken(tp,500)
 	Duel.CreateToken(1-tp,500)
 end
---when a banished "Stellar Vine" monster is returned to the Graveyard
-function c101010217.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x785e)
+function c101010217.cfilter(c)
+	return c:IsLevelAbove(1) and c:IsSetCard(0x785e)
 end
---you can banish 1 "Stellar Vine" monster from your Deck.
+function c101010217.condition(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	return eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)==1 and c101010217.cfilter(tc)
+end
 function c101010217.filter2(c)
-	return c:IsSetCard(0x785e) and c:IsAbleToRemove()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e) and c:IsAbleToRemove()
 end
 function c101010217.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101010217.filter2,tp,LOCATION_DECK,0,1,nil) end
@@ -44,7 +49,7 @@ function c101010217.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101010217.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101010217.filter2,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101010217.filter2,tp,LOCATION_DECK,0,1,eg:GetFirst():GetLevel(),nil)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

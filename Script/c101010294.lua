@@ -1,21 +1,18 @@
 --created & coded by Lyris
---Clarissa, Queen of Stellar Vine #2
+--S・VINEの第二女王クライッシャ
 function c101010294.initial_effect(c)
 	c:EnableCounterPermit(0x1)
-	--add counter
 	local ae3=Effect.CreateEffect(c)
 	ae3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	ae3:SetCode(EVENT_REMOVE)
 	ae3:SetRange(LOCATION_MZONE)
 	ae3:SetOperation(c101010294.acop)
 	c:RegisterEffect(ae3)
-	--Evolute Counter
 	local ae0=Effect.CreateEffect(c)
 	ae0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	ae0:SetCode(EVENT_CUSTOM+101010294)
 	ae0:SetOperation(c101010294.eop)
 	c:RegisterEffect(ae0)
-	--survival
 	local ae1=Effect.CreateEffect(c)
 	ae1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	ae1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -24,7 +21,6 @@ function c101010294.initial_effect(c)
 	ae1:SetTarget(c101010294.reptg)
 	ae1:SetOperation(c101010294.repop)
 	c:RegisterEffect(ae1)
-	--banish
 	local ae2=Effect.CreateEffect(c)
 	ae2:SetType(EFFECT_TYPE_QUICK_O)
 	ae2:SetRange(LOCATION_MZONE)
@@ -45,15 +41,20 @@ function c101010294.initial_effect(c)
 	end
 end
 c101010294.evolute=true
+c101010294.stage_o=8
+c101010294.stage=c101010294.stage_o
 c101010294.material1=function(mc) return mc:GetLevel()==4 and mc:IsRace(RACE_FAIRY) and mc:IsFaceup() end
 c101010294.material2=function(mc) return mc:GetLevel()==4 and mc:IsAttribute(ATTRIBUTE_WATER) and mc:IsFaceup() end
 function c101010294.chk(e,tp,eg,ep,ev,re,r,rp)
 	Duel.CreateToken(tp,388)
 	Duel.CreateToken(1-tp,388)
 end
+function c101010294.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e)
+end
 function c101010294.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if eg:IsExists(Card.IsSetCard,1,c,0x785e) then
+	if eg:IsExists(c101010294.cfilter,1,c) then
 		c:AddCounter(0x1,1)
 		if c:GetCounter(0x1)==3 then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+101010294,e,0,0,tp,0)
@@ -81,7 +82,7 @@ function c101010294.filter(c,e,tp)
 end
 function c101010294.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil):RandomSelect(tp,1)
-	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and bit.band(tc:GetFirst():GetOriginalType(),TYPE_FUSION)==TYPE_FUSION and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:GetFirst():IsLevelAbove(1) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101010294.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil,e,tp)
 		if g:GetCount()>0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end

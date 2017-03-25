@@ -1,19 +1,15 @@
---created by LionHeartKIng
---coded by Lyris
---Necromaster of Stellar Vine
+--created by LionHeartKIng, coded by Lyris
+--S・VINEのネクロマスター
 function c101020019.initial_effect(c)
-	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(46659709,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101020019)
-	e1:SetTarget(c101020019.sptg)
+	e1:SetCondition(c101020019.sptg)
 	e1:SetOperation(c101020019.spop)
 	c:RegisterEffect(e1)
-	--call
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,20 +21,18 @@ function c101020019.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101020019.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x785e) and not c:IsCode(101020019)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x785e) and not c:IsCode(101020019) and c:IsAbleToGrave()
 end
-function c101020019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c101020019.cfilter,tp,LOCATION_REMOVED,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c101020019.cfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+function c101020019.sptg(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101020019.cfilter,tp,LOCATION_REMOVED,0,1,nil)
 end
 function c101020019.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if Duel.SendtoGrave(tc,REASON_EFFECT) and e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
-	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c101020019.cfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c101020019.filter(c,e,tp)
 	return c:IsSetCard(0x785e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetCode()~=101020019
