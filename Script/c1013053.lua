@@ -2,12 +2,6 @@
 function c1013053.initial_effect(c)
 	--Pendulum Set
 	aux.EnablePendulumAttribute(c)
-	--[[	aux.AddPendulumProcedure(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)]]--
 	--Second Attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(1013053,0))
@@ -25,7 +19,7 @@ function c1013053.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_PZONE)
-	e3:SetCountLimit(1,1013053)
+	e3:SetCountLimit(1,1014053)
 	e3:SetTarget(c1013053.thtg)
 	e3:SetOperation(c1013053.thop)
 	c:RegisterEffect(e3)

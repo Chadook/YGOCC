@@ -37,9 +37,25 @@ function c1013063.spfilter(c,e,tp,atk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function c1013063.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=1 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1 
-		and Duel.IsPlayerCanSpecialSummon(tp) end
+	local g=Duel.GetDecktopGroup(tp,1)
+	local def=0
+	local atk=e:GetHandler():GetAttack()
+	local flag=false
+	if g and g:GetFirst():IsType(TYPE_MONSTER) then
+		def=g:GetFirst():GetBaseDefense()
+		atk=atk-def
+		flag=true
+	end
+	if chk==0 then 
+		if flag then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=1 
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1
+			and Duel.IsPlayerCanSpecialSummon(tp)
+			and Duel.IsExistingMatchingCard(c1013063.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,atk)
+		else
+			e:SetLabel(1) 
+			return true
+		end
+	end
 end
 function c1013063.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,9 +65,8 @@ function c1013063.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		Duel.DisableShuffleCheck()
-		if tc:IsType(TYPE_MONSTER) then
-			local def=tc:GetBase
-Defense()
+		if tc:IsType(TYPE_MONSTER) and e:GetLabel()==0 then
+			local def=tc:GetBaseDefense()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_IMMEDIATELY_APPLY)
@@ -61,12 +76,11 @@ Defense()
 			c:RegisterEffect(e1)
 			Duel.ShuffleDeck(tp)
 			local atk=c:GetAttack()
-			if Duel.IsExistingMatchingCard(c1013063.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,atk) then
-				local zg=Duel.GetMatchingGroup(c1013063.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,atk)
-				local szg=zg:Select(tp,1,1,nil)
-				if szg:GetCount()>0 then
-					Duel.SpecialSummon(szg,0,tp,tp,false,false,POS_FACEUP)
-				end
+			local zg=Duel.GetMatchingGroup(c1013063.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,atk)
+			if not zg then return end
+			local szg=zg:Select(tp,1,1,nil)
+			if szg and szg:GetCount()>0 then
+				Duel.SpecialSummon(szg,0,tp,tp,false,false,POS_FACEUP)
 			end
 		else
 			if not tc:IsType(TYPE_MONSTER) then
