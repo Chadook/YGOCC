@@ -4,6 +4,7 @@ function c99830045.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_DRAW_PHASE+TIMING_MAIN_END)
 	c:RegisterEffect(e1)
 	--Reduce ATK
 	local e2=Effect.CreateEffect(c)
@@ -12,7 +13,7 @@ function c99830045.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_PHASE_START+PHASE_BATTLE_START)
+	e2:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e2:SetCountLimit(1,99830045)
 	e2:SetCondition(c99830045.condition)
 	e2:SetCost(c99830045.cost)
@@ -32,14 +33,14 @@ function c99830045.initial_effect(c)
 end
 function c99830045.condition(e,tp,eg,ep,ev,re,r,rp)
  	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.GetTurnPlayer()~=tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c99830045.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDestructable() end
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function c99830045.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,3,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,3,nil) end
 end
 function c99830045.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

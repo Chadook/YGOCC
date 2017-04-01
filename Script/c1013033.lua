@@ -2,12 +2,6 @@
 function c1013033.initial_effect(c)
 	--Pendulum Set
 	aux.EnablePendulumAttribute(c)
-	--[[	aux.AddPendulumProcedure(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)]]--
 	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(1013033,0))
@@ -23,7 +17,7 @@ function c1013033.initial_effect(c)
 	e3:SetDescription(aux.Stringid(1013033,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1,1013033)
+	e3:SetCountLimit(1,1014033)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetTarget(c1013033.destg)
