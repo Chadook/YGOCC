@@ -1,2 +1,2 @@
 # YGOCC
-Download This repo this your YGOPRO's Main directory, The files will automatically be installed into your Game.
+Download this repository's contents, then move and merge "script," "pics," and "expansions" into your YGOPRO's main directory. This will install the files/cards into your game.
