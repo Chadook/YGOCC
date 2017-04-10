@@ -42,7 +42,7 @@ local e2=Effect.CreateEffect(c)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_PZONE)
-	e4:SetCost(c4242566.cost4)
+--	e4:SetCost(c4242566.cost4)
 	e4:SetTarget(c4242566.target4)
 	e4:SetOperation(c4242566.operation4)
 	c:RegisterEffect(e4)
@@ -64,6 +64,12 @@ function c4242566.target4(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c4242566.operation4(e,tp,eg,ep,ev,re,r,rp)
+	if chk==0 then return Duel.IsExistingTarget(c4242566.filter4,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.SelectTarget(tp,c4242566.filter4,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.Destroy(g,REASON_EFFECT)
         if not e:GetHandler():IsRelateToEffect(e) then return end
     local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
     Duel.Draw(p,d,REASON_EFFECT)

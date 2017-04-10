@@ -22,7 +22,7 @@ c:SetUniqueOnField(1,0,4242569)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
-	--cannot negate summon
+--(	--cannot negate summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -31,7 +31,7 @@ c:SetUniqueOnField(1,0,4242569)
 	--Nuke field, cannot negate
     local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetProperty(EFFECT_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_DISABLE)
+	
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e5:SetTarget(c4242569.target)
 	e5:SetOperation(c4242569.operation)

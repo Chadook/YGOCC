@@ -12,6 +12,20 @@ function c4242565.initial_effect(c)
 	e1:SetValue(300)
 	c:RegisterEffect(e1)
 	
+		--Destroy spell, move grave pend to extra
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(4242565,3))
+	e2:SetCountLimit(1,42425652)
+	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_PZONE)
+--	e2:SetCost(c4242565.condition4)
+	e2:SetTarget(c4242565.target4)
+	e2:SetOperation(c4242565.operation4)
+	c:RegisterEffect(e2)
+	
 	--Search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(4242565,2))
@@ -47,6 +61,37 @@ function c4242565.initial_effect(c)
 	e6:SetTarget(c4242565.target3)
 	e6:SetOperation(c4242565.operation3)
 	c:RegisterEffect(e6)
+end
+
+	--Destroy spell, move grave pend to extra
+function c4242565.filter4(c)
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsType(TYPE_SPELL) and not c:IsCode(4242565)
+end
+function c4242565.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsType(TYPE_PENDULUM)  --Duel.IsExistingMatchingCard(c4242565.filter4,tp,LOCATION_ONFIELD,0,1,nil)
+end
+--[[function c4242565.condition4(e,tp,eg,ep,ev,re,r,rp,chk)
+if chk==0 then return Duel.IsExistingMatchingCard(c4242565.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+end]]--
+function c4242565.target4(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingTarget(c4242565.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,c4242565.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,LOCATION_GRAVE)
+end
+function c4242565.operation4(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	local g=Duel.GetMatchingGroup(c4242565.filter4,tp,LOCATION_ONFIELD,0,nil)
+	if not tc or not tc:IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local sg=g:Select(tp,1,1,nil)
+	if Duel.Destroy(sg,REASON_EFFECT)>0 then
+		Duel.SendtoExtraP(tc,nil,REASON_EFFECT)
+ end
+--[[	if not e:GetHandler():IsRelateToEffect(e) then return end
+    local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+    Duel.Draw(p,d,REASON_EFFECT)]]--
 end
 
 --atk boost code
