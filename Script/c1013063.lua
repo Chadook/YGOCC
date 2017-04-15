@@ -38,6 +38,7 @@ function c1013063.spfilter(c,e,tp,atk)
 end
 function c1013063.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,1)
+	if g:GetCount()<=0 then return false end
 	local def=0
 	local atk=e:GetHandler():GetAttack()
 	local flag=false
