@@ -11,21 +11,23 @@ function c4242572.initial_effect(c)
 	e1:SetOperation(c4242572.activate)
 	c:RegisterEffect(e1)
 end
-function c4242572.cfilter2(c)
+function c4242572.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x666)
 end
-function c4242572.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2)
+function c4242572.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_HAND) and chkc:IsControler(tp) and c4242572.filter(chkc) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
+		and Duel.IsExistingTarget(c4242572.filter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4242572,0))
+	local g=Duel.SelectTarget(tp,c4242572.filter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c4242572.activate(e,tp,eg,ep,ev,re,r,rp)
-if chk==0 then return Duel.IsExistingMatchingCard(c4242572.cfilter2,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c4242572.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-	Duel.ShuffleHand(tp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoDeck(tc,REASON_EFFECT+REASON_RETURN,nil,nil)
+		Duel.BreakEffect()
+		Duel.Draw(tp,2,REASON_EFFECT)
+	end
 end
